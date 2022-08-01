@@ -1,0 +1,13 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWStructuredBuffer<float2> buffer;
+Texture2D<float2> tex;
+float4 bound;
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    buffer[id.y * 512 + id.x] = tex[id.xy];
+}
